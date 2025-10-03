@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="logo-removebg-preview.png">
+  <title>Contact Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: linear-gradient(135deg, #7f2731, #e15d43);
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+
+
+
+    .contact-container {
+      max-width: 480px;
+      width: 100%;
+      background: linear-gradient(135deg, #7f2731, #e15d43);
+      border-radius: 20px;
+      box-shadow: 0 18px 40px rgba(25, 27, 31, 0.6);
+      padding: 40px 30px;
+      color: #f0f0f5;
+    }
+
+    .contact-container h2 {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #fff;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 30px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #f0f0f5cc;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 15px 18px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #f0f0f5;
+      resize: none;
+      transition: background-color 0.4s ease;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #d3d3d9cc;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 8px #ff6f61;
+      color: #fff;
+    }
+
+    button.btn-submit1 {
+      width: 100%;
+      padding: 18px 0;
+      font-weight: 700;
+      font-size: 1.25rem;
+      text-align: center;
+      margin-bottom: 10px;
+      color: #fff;
+      background: linear-gradient(135deg, #ff6f61, #ff4a3e);
+      border: none;
+      border-radius: 35px;
+      box-shadow: 0 10px 30px rgba(255, 111, 97, 0.8);
+      cursor: pointer;
+      transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+      text-decoration: none;
+      display: block;
+    }
+
+    button.btn-submit1:hover {
+      background: linear-gradient(135deg, #ff4a3e, #ff6f61);
+      box-shadow: 0 14px 35px rgba(255, 74, 62, 0.9);
+      transform: translateY(-4px);
+    }
+
+    .btn-submit2,
+    a.btn-submit2 {
+      display: block;
+
+      width: 50%;
+      padding: 18px 0;
+      font-weight: 700;
+      font-size: 1.25rem;
+      text-align: center;
+
+      margin: auto;
+      color: #fff;
+      background: linear-gradient(135deg, #ff6f61, #ff4a3e);
+      border: none;
+      border-radius: 35px;
+      box-shadow: 0 10px 30px rgba(255, 111, 97, 0.8);
+      cursor: pointer;
+      transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+      text-decoration: none;
+
+
+
+
+    }
+
+    .btn-submit2:hover,
+    a.btn-submit2:hover {
+      background: linear-gradient(135deg, #ff4a3e, #ff6f61);
+      box-shadow: 0 14px 35px rgba(255, 74, 62, 0.9);
+      transform: translateY(-4px);
+    }
+
+    .footer-sticky1 {
+      background: #222;
+      color: #fff;
+      text-align: center;
+      padding: 5px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+      background: linear-gradient(90deg, #7f2731, #e15d43);
+    }
+
+    .footer-sticky1 p {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <section class="contact-container">
+    <h2>Contact Us</h2>
+    <form>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" placeholder="Your full name" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required />
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" placeholder="Type your message here..." required></textarea>
+      </div>
+      <button type="submit" class="btn-submit1">Send Message</button>
+      <a href="Home.html" class="btn-submit2">Home</a>
+
+    </form>
+  </section>
+
+  <footer class="footer-sticky1">
+    <p>&copy; Copyright SHOPEASE|| Design and developed by Raunak Khan </p>
+  </footer>
+</body>
+
+</html>
