@@ -2,210 +2,519 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="logo-removebg-preview.png">
-    <title>Gallery</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="logo-removebg-preview.png" />
+  <title>Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: linear-gradient(135deg, #7f2731, #e15d43);
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-bottom: max(88px, env(safe-area-inset-bottom));
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(135deg, #7f2731, #e15d43);
+      box-shadow: 0 20px 12px rgba(96, 16, 16, 0.3);
+    }
+
+    .navbar {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      position: relative;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    #nav-toggle {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      clip-path: inset(50%);
+      border: 0;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 8px;
+      cursor: pointer;
+      user-select: none;
+      z-index: 1100;
+      position: relative;
+    }
+
+    .hamburger span {
+      height: 2px;
+      width: 100%;
+      background: #fff;
+      border-radius: 2px;
+      transition: transform 0.25s, opacity 0.2s;
+    }
+
+    .nav-links {
+      display: block;
+    }
+
+    .nav-links ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: clamp(10px, 2vw, 32px);
+    }
+
+    .nav-links li {
+      border-radius: 6px;
+      transition: transform 0.28s, box-shadow 0.28s;
+    }
+
+    .nav-links li:hover {
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 0 8px 18px rgba(255, 111, 97, 0.3);
+      background: rgba(255, 111, 97, 0.2);
+    }
+
+    .nav-links a {
+      padding: 10px 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      color: #f0e5e0;
+      display: inline-block;
+      border-radius: 6px;
+      transition: color 0.3s;
+    }
+
+    .nav-links li.active a {
+      background: rgba(255, 111, 97, 0.3);
+    }
+
+    @media (max-width: 899px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .nav-links {
+        display: block;
+      }
+
+      .hamburger {
+        display: none;
+      }
+    }
+
+    .mobile-drawer {
+      position: absolute;
+      top: calc(60px + env(safe-area-inset-top, 0px));
+      left: 12px;
+      right: 12px;
+      background: rgba(127, 39, 38, 0.93);
+      backdrop-filter: blur(10px);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 10px;
+      margin-top: 10px;
+      transform: translateY(-10px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.2s, opacity 0.2s;
+      z-index: 1000;
+    }
+
+    .mobile-drawer ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .mobile-drawer li {
+      margin: 8px 0;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+
+    .mobile-drawer li:hover {
+      background: rgba(255, 111, 97, 0.3);
+    }
+
+    .mobile-drawer a {
+      color: #f0e5e0;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      display: block;
+      padding: 10px 14px;
+      border-radius: 6px;
+    }
+
+    /* Corrected sibling selectors to ~ */
+
+    #nav-toggle:checked~label.hamburger span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    #nav-toggle:checked~label.hamburger span:nth-child(2) {
+      opacity: 0;
+    }
+
+    #nav-toggle:checked~label.hamburger span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    #nav-toggle:checked~.mobile-drawer {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .products-section {
+     
+      margin: 20px;
+      padding: 0 20px 50px;
+    }
+
+    .products-section h2 {
+      text-align: center;
+      font-size: 40px;
+      color: #1d1d1e;
+      margin: 20px 0 22px;
+      font-weight: 1200;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .section-title {
+      text-align: left;
+      font-size: 2rem;
+      font-weight: 900;
+      color: #f0f0f5;
+      margin-bottom: 18px;
+      margin-top: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .products-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      justify-content: center;
+    }
+
+    .product-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      color: #f0f0f5;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      border-radius: 18px 18px 0 0;
+      display: block;
+    }
+
+    .card-details {
+      padding: 15px 20px;
+      text-align: center;
+    }
+
+    .card-details h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .card-details .price {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ff6f61;
+    }
+
+    footer.footer-sticky {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(135deg, #7f2731, #e15d43);
+      color: #fff;
+      text-align: center;
+      padding: 8px 10px;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.25);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      z-index: 900;
+    }
+  </style>
 </head>
 
 <body>
-   <section class="products-section">
-            <h2 class="section-title">Product Gallery</h2>
-            <div class="products-grid">
-                <div class="product-card">
+  <nav aria-label="Main menu">
+    <div class="navbar">
+      <div class="logo">
+        <img src="logo-removebg-preview.png" alt="ShopEase Logo" /> ShopEase
+      </div>
+      <input type="checkbox" id="nav-toggle" aria-label="Toggle navigation" />
+      <label class="hamburger" for="nav-toggle" aria-controls="mobile-menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </label>
+      <div class="nav-links">
+        <ul class="menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li class="active"><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li id="reg"><a href="signup.html">Registration</a></li>
+          <li id="log"><a href="login.html">Login</a></li>
+        </ul>
+      </div>
+      <div id="mobile-menu" class="mobile-drawer" role="menu" aria-hidden="true">
+        <ul class="menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li class="active"><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li id="reg"><a href="signup.html">Registration</a></li>
+          <li id="log"><a href="login.html">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-                    <img src="img1.jpeg" alt="Perfume" />
-                    <div class="card-details">
-                        <h3>Delizia Fragrances Good Girl</h3>
-                        <p class="price">₹2,999</p>
-                    </div>
-                </div>
+  <!-- Perfumes -->
+  <section class="products-section" aria-label="Perfumes">
+    <h2 class="section-title">Perfumes</h2>
+    <div class="products-grid">
+      <div class="product-card">
+        <img src="img1.jpeg" alt="Delizia Fragrances Good Girl perfume" />
+        <div class="card-details">
+          <h3>Delizia Fragrances Good Girl</h3>
+          <p class="price">₹2,999</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="img2.jpeg" alt="Chanel No.5 Eau de Parfum perfume" />
+        <div class="card-details">
+          <h3>Chanel No.5 Eau de Parfum</h3>
+          <p class="price">₹3,499</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="img3.jpeg" alt="Dior J’Adore perfume" />
+        <div class="card-details">
+          <h3>Dior J’Adore</h3>
+          <p class="price">₹1,749</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-                <div class="product-card">
-                    <img src="img2.jpeg" alt="Perfume" />
-                    <div class="card-details">
-                        <h3>Chanel No.5 Eau de Parfum</h3>
-                        <p class="price">₹3,499</p>
-                    </div>
+  <!-- Electronics -->
+  <section class="products-section" aria-label="Electronics">
+    <h2 class="section-title">Electronics</h2>
+    <div class="products-grid">
+      <div class="product-card">
+        <img src="elec1.jpeg" alt="Boat Speaker" />
+        <div class="card-details">
+          <h3>Boat Speaker</h3>
+          <p class="price">₹2,999</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="elec2.jpeg" alt="Boat Headphone" />
+        <div class="card-details">
+          <h3>Boat Headphone</h3>
+          <p class="price">₹3,499</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="elec3.jpeg" alt="Boat Headphone Nirvana" />
+        <div class="card-details">
+          <h3>Boat Headphone Nirvana</h3>
+          <p class="price">₹1,749</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-                </div>
+  <!-- Shoes -->
+  <section class="products-section" aria-label="Shoes">
+    <h2 class="section-title">Shoes</h2>
+    <div class="products-grid">
+      <div class="product-card">
+        <img src="shoe1.jpeg" alt="High top Sneaker" />
+        <div class="card-details">
+          <h3>High top Sneaker</h3>
+          <p class="price">₹2,999</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="shoe2.jpeg" alt="Nike Sneaker" />
+        <div class="card-details">
+          <h3>Nike Sneaker</h3>
+          <p class="price">₹3,499</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="shoe3.jpeg" alt="Sneaker" />
+        <div class="card-details">
+          <h3>Sneaker</h3>
+          <p class="price">₹1,749</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- Men's Outfits -->
+  <section class="products-section" aria-label="Men's Outfits">
+    <h2 class="section-title">Men's Outfits</h2>
+    <div class="products-grid">
+      <div class="product-card">
+        <img src="download (1).jpeg" alt="Men's Outfit style 1" />
+        <div class="card-details">
+          <h3>Mens Outfit</h3>
+          <p class="price">₹2,999</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="download2.jpeg" alt="Men's Outfit style 2" />
+        <div class="card-details">
+          <h3>Mens Outfit</h3>
+          <p class="price">₹3,499</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="download (3).jpeg" alt="Men's Outfit style 3" />
+        <div class="card-details">
+          <h3>Mens Output</h3>
+          <p class="price">₹1,749</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-                <div class="product-card">
-                    <img src="img3.jpeg" alt="perfume" />
-                    <div class="card-details">
-                        <h3>Dior J’Adore</h3>
-                        <p class="price">₹1,749</p>
-                    </div>
+  <!-- Watches -->
+  <section class="products-section" aria-label="Watches">
+    <h2 class="section-title">Watches</h2>
+    <div class="products-grid">
+      <div class="product-card">
+        <img src="watch1.jpeg" alt="Watch style 1" />
+        <div class="card-details">
+          <h3>Watch</h3>
+          <p class="price">₹2,999</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="watch2.jpeg" alt="Wrist Watch style 2" />
+        <div class="card-details">
+          <h3>Wrist Watch</h3>
+          <p class="price">₹3,499</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="watch3.jpeg" alt="Fossil Watch style 3" />
+        <div class="card-details">
+          <h3>Fossil Watch</h3>
+          <p class="price">₹1,749</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-                </div>
-            </div>
-        </section>
+  <!-- Keyboards & Mouse -->
+  <section class="products-section" aria-label="Keyboards & Mouse">
+    <h2 class="section-title">Keyboards & Mouse</h2>
+    <div class="products-grid">
+      <div class="product-card">
+        <img src="key1.jpeg" alt="Keyboard" />
+        <div class="card-details">
+          <h3>Keyboard</h3>
+          <p class="price">₹2,999</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="key2.jpeg" alt="Mouse" />
+        <div class="card-details">
+          <h3>Mouse</h3>
+          <p class="price">₹3,499</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="key3.jpeg" alt="Gaming Keyboard" />
+        <div class="card-details">
+          <h3>Gaming Keyboard</h3>
+          <p class="price">₹1,749</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <section class="products-section">
-
-            <div class="products-grid">
-                <div class="product-card">
-                    <img src="elec1.jpeg" alt="Perfume" />
-                    <div class="card-details">
-                        <h3>Boat Speaker</h3>
-                        <p class="price">₹2,999</p>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="elec2.jpeg" alt="Perfume" />
-                    <div class="card-details">
-                        <h3>Boat Headphone</h3>
-                        <p class="price">₹3,499</p>
-                    </div>
-
-                </div>
-
-
-                <div class="product-card">
-                    <img src="elec3.jpeg" alt="perfume" />
-                    <div class="card-details">
-                        <h3>Boat Headphone Nirvana</h3>
-                        <p class="price">₹1,749</p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section class="products-section">
-
-            <div class="products-grid">
-                <div class="product-card">
-                    <img src="shoe1.jpeg" alt="Perfume" />
-                    <div class="card-details">
-                        <h3>High top Sneaker</h3>
-                        <p class="price">₹2,999</p>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="shoe2.jpeg" alt="Perfume" />
-                    <div class="card-details">
-                        <h3>Nike Sneaker</h3>
-                        <p class="price">₹3,499</p>
-                    </div>
-
-                </div>
-
-
-                <div class="product-card">
-                    <img src="shoe3.jpeg" alt="perfume" />
-                    <div class="card-details">
-                        <h3>Sneaker</h3>
-                        <p class="price">₹1,749</p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section class="products-section">
-
-            <div class="products-grid">
-                <div class="product-card">
-                    <img src="download (1).jpeg" alt="Perfume" />
-                    <div class="card-details">
-                        <h3>Mens Outfit</h3>
-                        <p class="price">₹2,999</p>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="download2.jpeg" alt="Perfume" />
-                    <div class="card-details">
-                        <h3>Mens Outfit</h3>
-                        <p class="price">₹3,499</p>
-                    </div>
-
-                </div>
-
-
-                <div class="product-card">
-                    <img src="download (3).jpeg" alt="perfume" />
-                    <div class="card-details">
-                        <h3>Mens Output</h3>
-                        <p class="price">₹1,749</p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section class="products-section">
-
-            <div class="products-grid">
-                <div class="product-card">
-                    <img src="watch1.jpeg" alt="Perfume" />
-                    <div class="card-details">
-                        <h3>Watch</h3>
-                        <p class="price">₹2,999</p>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="watch2.jpeg" alt="Perfume" />
-                    <div class="card-details">
-                        <h3>Wrist Watch</h3>
-                        <p class="price">₹3,499</p>
-                    </div>
-
-                </div>
-
-
-                <div class="product-card">
-                    <img src="watch3.jpeg" alt="perfume" />
-                    <div class="card-details">
-                        <h3>Fossil Watch</h3>
-                        <p class="price">₹1,749</p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section class="products-section">
-
-            <div class="products-grid">
-                <div class="product-card">
-                    <img src="key1.jpeg" alt="Perfume" />
-                    <div class="card-details">
-                        <h3>Keyboard</h3>
-                        <p class="price">₹2,999</p>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="key2.jpeg" alt="Perfume" />
-                    <div class="card-details">
-                        <h3>Mouse</h3>
-                        <p class="price">₹3,499</p>
-                    </div>
-
-                </div>
-
-
-                <div class="product-card">
-                    <img src="key3.jpeg" alt="perfume" />
-                    <div class="card-details">
-                        <h3>Gaming Keyboard</h3>
-                        <p class="price">₹1,749</p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-   
-    <footer class="footer-sticky">
-        <p>&copy; Copyright SHOPEASE|| Design and developed by Raunak Khan </p>
-        </foot>
+  <footer class="footer-sticky">
+    <p>&copy; Copyright SHOPEASE|| Design and developed by Raunak Khan </p>
+  </footer>
 </body>
 
 </html>
